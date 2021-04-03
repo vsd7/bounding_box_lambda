@@ -23,35 +23,35 @@ def lambda_handler(event, context):
     for record in event['Records']:
         obj = json.loads(record["body"])
         logger.info(obj)
-        imagePath=obj['ImageFilePath']
-        jsonPath=obj['JsonFilePath']
-        image=imagePath.split('/')[-1]
-        jsonFile=jsonPath.split('/')[-1]
-        imageExtension=image.split('.')[1]
-        suffix=jsonFile.split('.')[0][-8:]
+        imagepath=obj['ImageFilePath']
+        jsonpath=obj['JsonFilePath']
+        image=imagepath.split('/')[-1]
+        jsonfile=jsonpath.split('/')[-1]
+        imageextension=image.split('.')[1]
+        suffix=jsonfile.split('.')[0][-8:]
         bucket=obj['Bucket']
-        s3path=imagePath.rpartition('/')[0]
+        s3path=imagepath.rpartition('/')[0]
         s3path=s3path+'/burnedimages/'
         logger.info(s3path)
-        logger.info(imagePath)
+        logger.info(imagepath)
         logger.info(image)
-        logger.info(imageExtension)
-        logger.info(jsonPath)
-        logger.info(jsonFile)
+        logger.info(imageextension)
+        logger.info(jsonpath)
+        logger.info(jsonfile)
         logger.info(suffix)
-
+        CONST_TEMP='/tmp/'
         label_dict = {}
         color_dict = {}
         try:
             s3_client.download_file(bucket, imagePath,
-                                    '/tmp/'+image)
-            logger.info("path "+str(path.exists("/tmp/"+image)))
-            output_image = cv2.imread('/tmp/'+image)
+                                    CONST_TEMP+image)
+            logger.info("path "+str(path.exists(CONST_TEMP+image)))
+            output_image = cv2.imread(CONST_TEMP+image)
             
-            s3_client.download_file(bucket, jsonPath,
-                                    '/tmp/'+jsonFile)
-            logger.info("path "+str(path.exists("/tmp/"+jsonFile)))
-            with open("/tmp/"+jsonFile) as f:
+            s3_client.download_file(bucket, jsonpath,
+                                    CONST_TEMP+jsonfile)
+            logger.info("path "+str(path.exists(CONST_TEMP+jsonfile)))
+            with open(CONST_TEMP+jsonfile) as f:
                 data = json.load(f)
             threshold=data['images'][0]['threshold']
             for categories in data['categories']:
@@ -73,11 +73,11 @@ def lambda_handler(event, context):
                     cv2.putText(output_image, label_dict.get(annotation['category_id']) + ' : %.2f' % annotation['probability'],
                                 (xmin, ymin + text_size[1] + 4), cv2.FONT_HERSHEY_PLAIN, 1, (255, 255, 255), 1)
 
-            imagepred=image.strip('.'+imageExtension)+suffix+'.'+imageExtension
-            cv2.imwrite("/tmp/"+imagepred, output_image)
-            logger.info("path png "+str(path.exists("/tmp/"+imagepred)))
-            logger.info("path png size "+str(path.getsize("/tmp/"+imagepred)))
-            s3_client.upload_file('/tmp/'+imagepred,
+            imagepred=image.strip('.'+imageextension)+suffix+'.'+imageextension
+            cv2.imwrite(CONST_TEMP+imagepred, output_image)
+            logger.info("path png "+str(path.exists(CONST_TEMP+imagepred)))
+            logger.info("path png size "+str(path.getsize(CONST_TEMP+imagepred)))
+            s3_client.upload_file(CONST_TEMP+imagepred,
                                   bucket,
                                   s3path+imagepred)
             url=s3_client.generate_presigned_url('get_object',
@@ -85,12 +85,12 @@ def lambda_handler(event, context):
                                                                     'Key': s3path+imagepred},
                                                             ExpiresIn=3600)
             logger.info(url)
-            os.remove("/tmp/"+imagepred)
-            os.remove("/tmp/"+image)
-            os.remove("/tmp/"+jsonFile)
-            logger.info("path png "+str(path.exists("/tmp/"+image)))
-            logger.info("path png "+str(path.exists("/tmp/"+jsonFile)))
-            logger.info("path png "+str(path.exists("/tmp/"+imagepred)))
+            os.remove(CONST_TEMP+imagepred)
+            os.remove(CONST_TEMP+image)
+            os.remove(CONST_TEMP+jsonFile)
+            logger.info("path png image"+str(path.exists(CONST_TEMP+image)))
+            logger.info("path png jsonfile"+str(path.exists(CONST_TEMP+jsonfile)))
+            logger.info("path png imagepred"+str(path.exists(CONST_TEMP+imagepred)))
             if obj['DownloadRequired']==1:
                 with conn.cursor() as cur:
                     query='update download_details set DownloadStatus=%s, DownloadURL=%s where DownloadRequestId=%s and FolderId=%s'
