@@ -7,3 +7,5 @@
 
 # bounding_box_lambda
 bounding_box_lambda
+
+SQS Triggered Lambda
