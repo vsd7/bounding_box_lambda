@@ -3,7 +3,6 @@ import os
 import os.path
 from os import path
 import logging
-import pymysql
 import boto3
 import cv2
 from PIL import ImageColor
@@ -12,13 +11,7 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 s3_client = boto3.client('s3')
-try:
-    conn = pymysql.connect(host='host', user='user', passwd='pwd', db='db', connect_timeout=5, autocommit=True)
-except pymysql.MySQLError as e:
-    logger.error("ERROR: Unexpected error: Could not connect to MySQL instance.")
-    logger.error(e)
-    sys.exit()
-logger.info("SUCCESS: Connection to RDS MySQL instance succeeded")
+
 def lambda_handler(event, context):
     for record in event['Records']:
         obj = json.loads(record["body"])
@@ -91,10 +84,6 @@ def lambda_handler(event, context):
             logger.info("path png image"+str(path.exists(CONST_TEMP+image)))
             logger.info("path png jsonfile"+str(path.exists(CONST_TEMP+jsonfile)))
             logger.info("path png imagepred"+str(path.exists(CONST_TEMP+imagepred)))
-            if obj['DownloadRequired']==1:
-                with conn.cursor() as cur:
-                    query='update download_details set DownloadStatus=%s, DownloadURL=%s where DownloadRequestId=%s and FolderId=%s'
-                    cur.execute(query,(3,url,obj['DownloadRequestId'],obj['FolderId']))
             return {
                 "statusCode": 200,
                 "headers": {
@@ -103,9 +92,6 @@ def lambda_handler(event, context):
                 "body": url
             }
         except Exception as e:
-            with conn.cursor() as cur:
-                    query='update download_details set DownloadStatus=%s where DownloadRequestId=%s and FolderId=%s'
-                    cur.execute(query,(4,obj['DownloadRequestId'],obj['FolderId']))
             return {
                 "statusCode": 200,
                 "headers": {
