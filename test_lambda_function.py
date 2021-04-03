@@ -67,7 +67,7 @@ class LambdaFunction(unittest.TestCase):
     @staticmethod
     def upload_file_to_s3():
         boto3.client("s3").upload_file(
-            CONST_TEMP + LambdaFunction.IMAGEPRED,
+            LambdaFunction.CONST_TEMP + LambdaFunction.IMAGEPRED,
             LambdaFunction.BUCKET,
             LambdaFunction.S3PATH + LambdaFunction.IMAGEPRED,
         )
@@ -77,7 +77,7 @@ class LambdaFunction(unittest.TestCase):
         return boto3.client("s3").download_file(
             LambdaFunction.BUCKET,
             LambdaFunction.IMAGEPATH,
-            CONST_TEMP + LambdaFunction.IMAGE1,
+            LambdaFunction.CONST_TEMP + LambdaFunction.IMAGE1,
         )
 
     @staticmethod
@@ -85,7 +85,7 @@ class LambdaFunction(unittest.TestCase):
         return boto3.client("s3").download_file(
             LambdaFunction.BUCKET,
             LambdaFunction.JSONPATH,
-            CONST_TEMP + LambdaFunction.JSONFILE,
+            LambdaFunction.CONST_TEMP + LambdaFunction.JSONFILE,
         )
 
     def test_lambda_hanlder(self):
