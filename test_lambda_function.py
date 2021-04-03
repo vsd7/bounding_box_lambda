@@ -7,6 +7,7 @@ import boto3
 
 @mock_s3
 class LambdaFunction(unittest.TestCase):
+    DIR_PATH = os.path.dirname(os.path.realpath(__file__))
     IMAGEPATH = "a/b/c.tif"
     JSONPATH = "a/b/meta/c_nuc-det.json"
     IMAGE1 = "c.tif"
