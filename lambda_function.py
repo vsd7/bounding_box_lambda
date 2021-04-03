@@ -43,7 +43,7 @@ def lambda_handler(event, context):
         label_dict = {}
         color_dict = {}
         try:
-            s3_client.download_file(bucket, imagePath,
+            s3_client.download_file(bucket, imagepath,
                                     CONST_TEMP+image)
             logger.info("path "+str(path.exists(CONST_TEMP+image)))
             output_image = cv2.imread(CONST_TEMP+image)
@@ -87,7 +87,7 @@ def lambda_handler(event, context):
             logger.info(url)
             os.remove(CONST_TEMP+imagepred)
             os.remove(CONST_TEMP+image)
-            os.remove(CONST_TEMP+jsonFile)
+            os.remove(CONST_TEMP+jsonfile)
             logger.info("path png image"+str(path.exists(CONST_TEMP+image)))
             logger.info("path png jsonfile"+str(path.exists(CONST_TEMP+jsonfile)))
             logger.info("path png imagepred"+str(path.exists(CONST_TEMP+imagepred)))
