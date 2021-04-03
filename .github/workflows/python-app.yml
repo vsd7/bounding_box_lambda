@@ -31,7 +31,7 @@ jobs:
         # flake8 .
     - name: Test with pytest
       run: |
-        #pytest test_lambda_function.py
+        pytest --cov=./ --cov-report=xml --doctest-modules test_lambda_function.py
     - name: Code Coverage with coverage
       run: |
         coverage run test_lambda_function.py
