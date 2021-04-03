@@ -8,14 +8,14 @@ import boto3
 @mock_s3
 class LambdaFunction(unittest.TestCase):
     DIR_PATH = os.path.dirname(os.path.realpath(__file__))
-    IMAGEPATH = "a/b/c.tif"
-    JSONPATH = "a/b/meta/c_nuc-det.json"
-    IMAGE1 = "c.tif"
-    JSONFILE = "c_nuc-det.json"
+    IMAGEPATH = "u-1608292924392/f-1616075246357/ENSG00000000003_4109_23_H11_2_blue.tif"
+    JSONPATH = "u-1608292924392/f-1616075246357/meta/ENSG00000000003_4109_23_H11_2_blue_nuc-det.json"
+    IMAGE1 = "ENSG00000000003_4109_23_H11_2_blue.tif"
+    JSONFILE = "ENSG00000000003_4109_23_H11_2_blue_nuc-det.json"
     IMAGEEXTENSION = "tif"
     SUFFIX = "_nuc-det"
     BUCKET = "test_bucket"
-    S3PATH = "a/b/burnedimages/"
+    S3PATH = "u-1608292924392/f-1616075246357/burnedimages/"
     AWSACCESSID = "fakeid"
     AWSSECRETKEY = "fakesecret"
     RDS_HOSTNAME = "RDS_HOSTNAME"
@@ -25,12 +25,6 @@ class LambdaFunction(unittest.TestCase):
     CONST_TEMP = "/tmp/"  # NOSONAR
 
     def setUp(self):
-        os.environ[AWSACCESSID] = LambdaFunction.AWSACCESSID
-        os.environ[AWSSECRETKEY] = LambdaFunction.AWSSECRETKEY
-        os.environ[RDS_HOSTNAME] = LambdaFunction.RDS_HOSTNAME
-        os.environ[RDS_USERNAME] = LambdaFunction.RDS_USERNAME
-        os.environ[RDS_PASSWORD] = LambdaFunction.RDS_PASSWORD
-        os.environ[RDS_DB_NAME] = LambdaFunction.RDS_DB_NAME
         client = boto3.client(
             "s3",
             region_name="us-east-1"
@@ -39,13 +33,6 @@ class LambdaFunction(unittest.TestCase):
         client.create_bucket(Bucket=LambdaFunction.BUCKET)
 
     def tearDown(self):
-        del os.environ[AWSACCESSID]
-        del os.environ[AWSSECRETKEY]
-        del os.environ[RDS_HOSTNAME]
-        del os.environ[RDS_USERNAME]
-        del os.environ[RDS_PASSWORD]
-        del os.environ[RDS_DB_NAME]
-
         self.remove_bucket(LambdaFunction.BUCKET)
 
     @staticmethod
@@ -61,7 +48,7 @@ class LambdaFunction(unittest.TestCase):
                 {
                     "messageId": "19dd0b57-b21e-4ac1-bd88-01bbb068cb78",
                     "receiptHandle": "MessageReceiptHandle",
-                    "body": '{"DownloadRequestId": "Req-1616075432009", "Bucket": "t-72bb13bc-0107-7334-9f4b-f86add651c06", "ImageFilePath": "u-1608292924392/f-1616075246357/ENSG00000000003_4109_23_H11_2_blue.tif", "FolderId": 423, "DownloadRequired": 1}',
+                    "body": '{\"DownloadRequestId\": \"Req-1616075432009\", \"Bucket\": \"t-72bb13bc-0107-7334-9f4b-f86add651c06\", \"JsonFilePath\": \"u-1608292924392/f-1616075246357/meta/ENSG00000000003_4109_23_H11_2_blue_nuc-det.json\", \"ImageFilePath\": \"u-1608292924392/f-1616075246357/ENSG00000000003_4109_23_H11_2_blue.tif\", \"FolderId\": 423, \"DownloadRequired\": 1}',
                     "attributes": {
                         "ApproximateReceiveCount": "1",
                         "SentTimestamp": "1523232000000",
