@@ -11,7 +11,7 @@ class LambdaFunction(unittest.TestCase):
     IMAGE1='c.tif'
     JSONFILE='c_nuc-det.json'
     IMAGEEXTENSION='tif'
-    suffix='_nuc-det'
+    SUFFIX='_nuc-det'
     BUCKET='test_bucket'
     S3PATH='a/b/burnedimages/'
     AWSACCESSID='fakeid'
@@ -49,7 +49,7 @@ class LambdaFunction(unittest.TestCase):
         s3_bucket.delete()
     
     @staticmethod
-    def get_sqs_event(bucket, key):
+    def get_sqs_event():
         return {
                 "Records": [
                         {
@@ -72,14 +72,30 @@ class LambdaFunction(unittest.TestCase):
         }
       
      @staticmethod
-    def upload_file_to_s3(object_, bucket, s3_source_key):
+    def upload_file_to_s3():
         boto3.client('s3').upload_file(CONST_TEMP+LambdaFunction.IMAGEPRED,
                                   LambdaFunction.BUCKET,
                                   LambdaFunction.S3PATH+LambdaFunction.IMAGEPRED)
 
     @staticmethod
-    def get_s3_object(bucket, key):
-        return boto3.client('s3').get_object(Bucket=bucket, Key=key)
+    def download_image_file_from_s3():
+        return boto3.client('s3').download_file(LambdaFunction.BUCKET, LambdaFunction.IMAGEPATH,
+                                    CONST_TEMP+LambdaFunction.IMAGE1)
+    
+    @staticmethod
+    def download_json_file_from_s3():
+        return boto3.client('s3').download_file(LambdaFunction.BUCKET, LambdaFunction.JSONPATH,
+                                    CONST_TEMP+LambdaFunction.JSONFILE)
+    
+    
+    def test_lambda_hanlder(self):
+        event = self.get_sqs_event()
+        message = extract.lambda_handler(event, None)
+        self.download_image_file_from_s3()
+        self.download_json_file_from_s3()
+        self.upload_file_to_s3()
+        
+        
     
 if __name__ == "__main__":
     unittest.main()
