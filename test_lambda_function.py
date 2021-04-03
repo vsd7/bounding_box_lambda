@@ -2,7 +2,6 @@ import unittest
 import os
 from moto import mock_s3
 import boto3
-import json
 
 
 @mock_s3
@@ -62,7 +61,11 @@ class LambdaFunction(unittest.TestCase):
                 {
                     "messageId": "19dd0b57-b21e-4ac1-bd88-01bbb068cb78",
                     "receiptHandle": "MessageReceiptHandle",
-                    "body": '{"DownloadRequestId": "Req-1616075432009", "Bucket": "t-72bb13bc-0107-7334-9f4b-f86add651c06", "JsonFilePath": "u-1608292924392/f-1616075246357/meta/ENSG00000000003_4109_23_H11_2_blue_nuc-det.json", "ImageFilePath": "u-1608292924392/f-1616075246357/ENSG00000000003_4109_23_H11_2_blue.tif", "FolderId": 423, "DownloadRequired": 1}',
+                    "body": '{"DownloadRequestId": "Req-1616075432009", 
+                    "Bucket": "t-72bb13bc-0107-7334-9f4b-f86add651c06", 
+                    "JsonFilePath": "u-1608292924392/f-1616075246357/meta/ENSG00000000003_4109_23_H11_2_blue_nuc-det.json", 
+                    "ImageFilePath": "u-1608292924392/f-1616075246357/ENSG00000000003_4109_23_H11_2_blue.tif", 
+                    "FolderId": 423, "DownloadRequired": 1}',
                     "attributes": {
                         "ApproximateReceiveCount": "1",
                         "SentTimestamp": "1523232000000",
@@ -104,7 +107,7 @@ class LambdaFunction(unittest.TestCase):
 
     def test_lambda_hanlder(self):
         event = self.get_sqs_event()
-        message = extract.lambda_handler(event, None)
+        lambda_function.lambda_handler(event, None)
         self.download_image_file_from_s3()
         self.download_json_file_from_s3()
         self.upload_file_to_s3()
