@@ -32,9 +32,7 @@ class LambdaFunction(unittest.TestCase):
         os.environ[RDS_DB_NAME] = LambdaFunction.RDS_DB_NAME
         client = boto3.client(
             "s3",
-            region_name="us-east-1",
-            aws_access_key_id=LambdaFunction.AWSACCESSID
-            aws_secret_access_key=LambdaFunction.AWSSECRETKEY
+            region_name="us-east-1"
         )
 
         client.create_bucket(Bucket=LambdaFunction.BUCKET)
