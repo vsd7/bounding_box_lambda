@@ -31,4 +31,4 @@ jobs:
         # flake8 .
     - name: Test with pytest
       run: |
-        pytest -m unittest test_lambda_function.py
+        pytest test_lambda_function.py
