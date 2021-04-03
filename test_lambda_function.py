@@ -24,28 +24,28 @@ class LambdaFunction(unittest.TestCase):
     CONST_TEMP = "/tmp/"  # NOSONAR
 
     def setUp(self):
-        os.environ[LambdaFunction.AWSACCESSID] = LambdaFunction.AWSACCESSID
-        os.environ[LambdaFunction.AWSSECRETKEY] = LambdaFunction.AWSSECRETKEY
-        os.environ[LambdaFunction.RDS_HOSTNAME] = LambdaFunction.RDS_HOSTNAME
-        os.environ[LambdaFunction.RDS_USERNAME] = LambdaFunction.RDS_USERNAME
-        os.environ[LambdaFunction.RDS_PASSWORD] = LambdaFunction.RDS_PASSWORD
-        os.environ[LambdaFunction.RDS_DB_NAME] = LambdaFunction.RDS_DB_NAME
+        os.environ[AWSACCESSID] = LambdaFunction.AWSACCESSID
+        os.environ[AWSSECRETKEY] = LambdaFunction.AWSSECRETKEY
+        os.environ[RDS_HOSTNAME] = LambdaFunction.RDS_HOSTNAME
+        os.environ[RDS_USERNAME] = LambdaFunction.RDS_USERNAME
+        os.environ[RDS_PASSWORD] = LambdaFunction.RDS_PASSWORD
+        os.environ[RDS_DB_NAME] = LambdaFunction.RDS_DB_NAME
         client = boto3.client(
             "s3",
             region_name="us-east-1",
-            aws_access_key_id=os.environ[LambdaFunction.AWSACCESSID],
-            aws_secret_access_key=os.environ[LambdaFunction.AWSSECRETKEY],
+            aws_access_key_id=os.environ[AWSACCESSID],
+            aws_secret_access_key=os.environ[AWSSECRETKEY],
         )
 
         client.create_bucket(Bucket=LambdaFunction.BUCKET)
 
     def tearDown(self):
-        del os.environ[LambdaFunction.AWSACCESSID]
-        del os.environ[LambdaFunction.AWSSECRETKEY]
-        del os.environ[LambdaFunction.RDS_HOSTNAME]
-        del os.environ[LambdaFunction.RDS_USERNAME]
-        del os.environ[LambdaFunction.RDS_PASSWORD]
-        del os.environ[LambdaFunction.RDS_DB_NAME]
+        del os.environ[AWSACCESSID]
+        del os.environ[AWSSECRETKEY]
+        del os.environ[RDS_HOSTNAME]
+        del os.environ[RDS_USERNAME]
+        del os.environ[RDS_PASSWORD]
+        del os.environ[RDS_DB_NAME]
 
         self.remove_bucket(LambdaFunction.BUCKET)
 
