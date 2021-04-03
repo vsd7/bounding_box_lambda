@@ -33,8 +33,8 @@ class LambdaFunction(unittest.TestCase):
         client = boto3.client(
             "s3",
             region_name="us-east-1",
-            aws_access_key_id=os.environ[AWSACCESSID],
-            aws_secret_access_key=os.environ[AWSSECRETKEY],
+            aws_access_key_id=LambdaFunction.AWSACCESSID
+            aws_secret_access_key=LambdaFunction.AWSSECRETKEY
         )
 
         client.create_bucket(Bucket=LambdaFunction.BUCKET)
