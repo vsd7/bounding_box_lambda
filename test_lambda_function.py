@@ -33,12 +33,12 @@ class LambdaFunction(unittest.TestCase):
         client.create_bucket(Bucket=LambdaFunction.BUCKET)
         
     def tearDown(self):
-        del os.environ[LambdaFunction.AWSACCESSID] = LambdaFunction.AWSACCESSID
-        del os.environ[LambdaFunction.AWSSECRETKEY] = LambdaFunction.AWSSECRETKEY
-        del os.environ[LambdaFunction.RDS_HOSTNAME] = LambdaFunction.RDS_HOSTNAME
-        del os.environ[LambdaFunction.RDS_USERNAME] = LambdaFunction.RDS_USERNAME
-        del os.environ[LambdaFunction.RDS_PASSWORD] = LambdaFunction.RDS_PASSWORD
-        del os.environ[LambdaFunction.RDS_DB_NAME] = LambdaFunction.RDS_DB_NAME
+        del os.environ[LambdaFunction.AWSACCESSID]
+        del os.environ[LambdaFunction.AWSSECRETKEY]
+        del os.environ[LambdaFunction.RDS_HOSTNAME]
+        del os.environ[LambdaFunction.RDS_USERNAME]
+        del os.environ[LambdaFunction.RDS_PASSWORD]
+        del os.environ[LambdaFunction.RDS_DB_NAME]
 
         self.remove_bucket(LambdaFunction.BUCKET)
 
