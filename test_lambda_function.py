@@ -61,11 +61,7 @@ class LambdaFunction(unittest.TestCase):
                 {
                     "messageId": "19dd0b57-b21e-4ac1-bd88-01bbb068cb78",
                     "receiptHandle": "MessageReceiptHandle",
-                    "body": '{"DownloadRequestId": "Req-1616075432009", 
-                    "Bucket": "t-72bb13bc-0107-7334-9f4b-f86add651c06", 
-                    "JsonFilePath": "u-1608292924392/f-1616075246357/meta/ENSG00000000003_4109_23_H11_2_blue_nuc-det.json", 
-                    "ImageFilePath": "u-1608292924392/f-1616075246357/ENSG00000000003_4109_23_H11_2_blue.tif", 
-                    "FolderId": 423, "DownloadRequired": 1}',
+                    "body": '{"DownloadRequestId": "Req-1616075432009", "Bucket": "t-72bb13bc-0107-7334-9f4b-f86add651c06", "ImageFilePath": "u-1608292924392/f-1616075246357/ENSG00000000003_4109_23_H11_2_blue.tif", "FolderId": 423, "DownloadRequired": 1}',
                     "attributes": {
                         "ApproximateReceiveCount": "1",
                         "SentTimestamp": "1523232000000",
