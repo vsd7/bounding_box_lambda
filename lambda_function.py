@@ -13,7 +13,7 @@ logger.setLevel(logging.INFO)
 
 s3_client = boto3.client('s3')
 try:
-    conn = pymysql.connect(host=host, user=user, passwd=pwd, db=db, connect_timeout=5, autocommit=True)
+    conn = pymysql.connect(host='host', user='user', passwd='pwd', db='db', connect_timeout=5, autocommit=True)
 except pymysql.MySQLError as e:
     logger.error("ERROR: Unexpected error: Could not connect to MySQL instance.")
     logger.error(e)
