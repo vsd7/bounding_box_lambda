@@ -31,7 +31,7 @@ class LambdaFunction(unittest.TestCase):
         os.environ[LambdaFunction.RDS_DB_NAME] = LambdaFunction.RDS_DB_NAME
         client = boto3.client(
             "s3",
-            region_name="eu-central-1",
+            region_name="us-east-1",
             aws_access_key_id=os.environ[LambdaFunction.AWSACCESSID],
             aws_secret_access_key=os.environ[LambdaFunction.AWSSECRETKEY],
         )
@@ -72,7 +72,7 @@ class LambdaFunction(unittest.TestCase):
                     "md5OfBody": "{{{md5_of_body}}}",
                     "eventSource": "aws:sqs",
                     "eventSourceARN": "arn:aws:sqs:eu-central-1:123456789012:MyQueue",
-                    "awsRegion": "eu-central-1",
+                    "awsRegion": "us-east-1",
                 }
             ]
         }
