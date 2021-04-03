@@ -1,5 +1,6 @@
 import unittest
 import os
+from lambda_function import lambda
 from moto import mock_s3
 import boto3
 
@@ -103,7 +104,7 @@ class LambdaFunction(unittest.TestCase):
 
     def test_lambda_hanlder(self):
         event = self.get_sqs_event()
-        lambda_function.lambda_handler(event, None)
+        lambda.lambda_handler(event, None)
         self.download_image_file_from_s3()
         self.download_json_file_from_s3()
         self.upload_file_to_s3()
