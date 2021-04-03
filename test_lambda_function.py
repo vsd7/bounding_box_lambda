@@ -1,6 +1,6 @@
 import unittest
 import os
-from bounding_box_lambda import lambda_function
+from . import lambda_function
 from moto import mock_s3
 import boto3
 
