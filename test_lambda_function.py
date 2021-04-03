@@ -22,23 +22,23 @@ class LambdaFunction(unittest.TestCase):
     RDS_PASSWORD='RDS_PASSWORD'
     CONST_TEMP='/tmp/'  #NOSONAR
     def setUp(self):
-        os.environ[LambdaFunction.AWSACCESSID] = TestExtract.AWSACCESSID
-        os.environ[LambdaFunction.AWSSECRETKEY] = TestExtract.AWSSECRETKEY
-        os.environ[LambdaFunction.RDS_HOSTNAME] = TestExtract.RDS_HOSTNAME
-        os.environ[LambdaFunction.RDS_USERNAME] = TestExtract.RDS_USERNAME
-        os.environ[LambdaFunction.RDS_PASSWORD] = TestExtract.RDS_PASSWORD
-        os.environ[LambdaFunction.RDS_DB_NAME] = TestExtract.RDS_DB_NAME
+        os.environ[LambdaFunction.AWSACCESSID] = LambdaFunction.AWSACCESSID
+        os.environ[LambdaFunction.AWSSECRETKEY] = LambdaFunction.AWSSECRETKEY
+        os.environ[LambdaFunction.RDS_HOSTNAME] = LambdaFunction.RDS_HOSTNAME
+        os.environ[LambdaFunction.RDS_USERNAME] = LambdaFunction.RDS_USERNAME
+        os.environ[LambdaFunction.RDS_PASSWORD] = LambdaFunction.RDS_PASSWORD
+        os.environ[LambdaFunction.RDS_DB_NAME] = LambdaFunction.RDS_DB_NAME
         client = boto3.client("s3",region_name="eu-central-1",aws_access_key_id=os.environ[LambdaFunction.AWSACCESSID],aws_secret_access_key=os.environ[LambdaFunction.AWSSECRETKEY])
         
         client.create_bucket(Bucket=LambdaFunction.BUCKET)
         
     def tearDown(self):
-        del os.environ[LambdaFunction.AWSACCESSID] = TestExtract.AWSACCESSID
-        del os.environ[LambdaFunction.AWSSECRETKEY] = TestExtract.AWSSECRETKEY
-        del os.environ[LambdaFunction.RDS_HOSTNAME] = TestExtract.RDS_HOSTNAME
-        del os.environ[LambdaFunction.RDS_USERNAME] = TestExtract.RDS_USERNAME
-        del os.environ[LambdaFunction.RDS_PASSWORD] = TestExtract.RDS_PASSWORD
-        del os.environ[LambdaFunction.RDS_DB_NAME] = TestExtract.RDS_DB_NAME
+        del os.environ[LambdaFunction.AWSACCESSID] = LambdaFunction.AWSACCESSID
+        del os.environ[LambdaFunction.AWSSECRETKEY] = LambdaFunction.AWSSECRETKEY
+        del os.environ[LambdaFunction.RDS_HOSTNAME] = LambdaFunction.RDS_HOSTNAME
+        del os.environ[LambdaFunction.RDS_USERNAME] = LambdaFunction.RDS_USERNAME
+        del os.environ[LambdaFunction.RDS_PASSWORD] = LambdaFunction.RDS_PASSWORD
+        del os.environ[LambdaFunction.RDS_DB_NAME] = LambdaFunction.RDS_DB_NAME
 
         self.remove_bucket(LambdaFunction.BUCKET)
 
