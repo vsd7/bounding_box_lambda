@@ -1,6 +1,6 @@
 import unittest
 import os
-from . import lambda_function
+from os.getcwd() import lambda_function
 from moto import mock_s3
 import boto3
 
