@@ -11,9 +11,9 @@ from PIL import ImageColor
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-s3_client = boto3.client('s3',aws_access_key_id=os.environ['AWSACCESSID'],aws_secret_access_key=os.environ['AWSSECRETKEY'])
+s3_client = boto3.client('s3')
 try:
-    conn = pymysql.connect(host=os.environ['RDS_HOSTNAME'], user=os.environ['RDS_USERNAME'], passwd=os.environ['RDS_PASSWORD'], db=os.environ['RDS_DB_NAME'], connect_timeout=5, autocommit=True)
+    conn = pymysql.connect(host=host, user=user, passwd=pwd, db=db, connect_timeout=5, autocommit=True)
 except pymysql.MySQLError as e:
     logger.error("ERROR: Unexpected error: Could not connect to MySQL instance.")
     logger.error(e)
