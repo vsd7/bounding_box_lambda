@@ -39,7 +39,7 @@ def lambda_handler(event, context):
         logger.info(jsonpath)
         logger.info(jsonfile)
         logger.info(suffix)
-        CONST_TEMP='/tmp/'
+        CONST_TEMP='/tmp/' #NOSONAR
         label_dict = {}
         color_dict = {}
         try:
